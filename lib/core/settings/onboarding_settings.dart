@@ -29,8 +29,13 @@ class OnboardingSettings {
   }
 
   Future<void> _initPrefs() async {
-    _preferences = await SharedPreferences.getInstance();
-    log('SharedPreferences initialized.');
+    try {
+      _preferences = await SharedPreferences.getInstance();
+      log('SharedPreferences initialized.');
+    } catch (e) {
+      log('Error initializing SharedPreferences: $e');
+      throw Exception('Failed to initialize SharedPreferences');
+    }
   }
 
   // Onboarding Methods

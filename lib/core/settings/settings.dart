@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import './onboarding_settings.dart';
 
 class Settings {
@@ -27,7 +29,20 @@ class Settings {
   }
 
   Future<void> _initSettings() async {
+    log('Initializing OnboardingSettings...');
+    await OnboardingSettings.init();
     onboarding = OnboardingSettings.instance;
+  }
+
+  Map<String, dynamic> getAllSettingsInfo() {
+    return {
+      'onboarding': onboarding.getOnboardingInfo(),
+    };
+  }
+
+  Future<void> resetAllSettings() async {
+    await onboarding.resetOnboarding();
+    log('All settings reset to default.');
   }
 
 }

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:faceit/app/view/app.dart';
 import 'package:faceit/core/di/injection.dart';
 import 'package:faceit/core/settings/onboarding_settings.dart';
+import 'package:faceit/core/settings/settings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app_state.dart';
 
@@ -16,9 +17,6 @@ class AppCubit extends Cubit<AppState> {
 
     // Verify onboarding status
     final shouldShowOnboarding = _onboardingSettings.shouldShowOnBoarding();
-    final onboardingInfo = _onboardingSettings.getOnboardingInfo();
-    log('Onboarding status: $shouldShowOnboarding');
-    log('Onboarding info: $onboardingInfo');
 
     if (shouldShowOnboarding) {
       emit(AppNeedsOnboarding());
