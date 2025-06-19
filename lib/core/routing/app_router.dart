@@ -1,15 +1,38 @@
+import 'package:faceit/app/cubit/app_cubit.dart';
+import 'package:faceit/app/cubit/app_state.dart';
+import 'package:faceit/features/onboarding/views/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
+
+
+
   static GoRouter createRouter() {
     return GoRouter(
       initialLocation: '/',
+      redirect: (context, state) {
+        // Check if the user needs to see the onboarding screen
+        final shouldShowOnboarding = context.read<AppCubit>().state is AppNeedsOnboarding;
+
+        if (shouldShowOnboarding && state.uri.toString() != '/onboarding') {
+          return '/onboarding';
+        } else if (!shouldShowOnboarding && state.uri.toString() == '/onboarding') {
+          return '/';
+        }
+        return null; // No redirection needed
+      } ,
       routes: [
         GoRoute(
           path: '/',
           name: 'home',
           builder: (context, state) => const HomeScreen(),
+        ),
+        GoRoute(
+          path: '/onboarding',
+          name: 'onboarding',
+          builder: (context, state) => const OnboardingScreen(),
         ),
       ],
       errorBuilder: (context, state) =>
