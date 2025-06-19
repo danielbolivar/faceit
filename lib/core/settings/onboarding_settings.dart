@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingSettings {
@@ -20,22 +22,22 @@ class OnboardingSettings {
 
   // Initialize SharedPreferences and load existing settings
   static Future<void> init() async {
-    print('Initializing OnboardingSettings...');
+    log('Initializing OnboardingSettings...');
     _instance = OnboardingSettings._();
     await _instance!._initPrefs();
-    print('OnboardingSettings initialized.');
+    log('OnboardingSettings initialized.');
   }
 
   Future<void> _initPrefs() async {
     _preferences = await SharedPreferences.getInstance();
-    print('SharedPreferences initialized.');
+    log('SharedPreferences initialized.');
   }
 
   // Onboarding Methods
 
   bool get isOnboardingComplete {
     final completed = _preferences.getBool('${_keyPrefix}completed') ?? false;
-    print('Onboarding completed: $completed');
+    log('Onboarding completed: $completed');
     return completed;
   }
 
@@ -46,7 +48,7 @@ class OnboardingSettings {
       '${_keyPrefix}completed_at',
       DateTime.now().toIso8601String(),
     );
-    print('Onboarding marked as completed - version: $_currentVersion');
+    log('Onboarding marked as completed - version: $_currentVersion');
   }
 
   DateTime? get onboardingCompletedAt {
@@ -55,16 +57,16 @@ class OnboardingSettings {
     );
     if (completedAtString != null) {
       final completedAt = DateTime.tryParse(completedAtString);
-      print('Onboarding completed at: $completedAt');
+      log('Onboarding completed at: $completedAt');
       return completedAt;
     }
-    print('Onboarding not completed yet.');
+    log('Onboarding not completed yet.');
     return null;
   }
 
   String? get onboardingVersion {
     final version = _preferences.getString('${_keyPrefix}version');
-    print('Onboarding version: $version');
+    log('Onboarding version: $version');
     return version;
   }
 
@@ -72,20 +74,20 @@ class OnboardingSettings {
     await _preferences.remove('${_keyPrefix}completed');
     await _preferences.remove('${_keyPrefix}version');
     await _preferences.remove('${_keyPrefix}completed_at');
-    print('Onboarding settings reset.');
+    log('Onboarding settings reset.');
   }
 
   bool shouldShowOnBoarding([String? currentVersion]) {
     final version = currentVersion ?? _currentVersion;
     final lastVersion = _preferences.getString('${_keyPrefix}version');
     final shouldShow = lastVersion != version || !isOnboardingComplete;
-    print('Should show onboarding for version $version: $shouldShow');
+    log('Should show onboarding for version $version: $shouldShow');
     return shouldShow;
   }
 
   Future<void> setOnboardingVersion(String version) async {
     await _preferences.setString('${_keyPrefix}version', version);
-    print('Onboarding version set to: $version');
+    log('Onboarding version set to: $version');
   }
 
   Map<String, dynamic> getOnboardingInfo() {
@@ -97,7 +99,7 @@ class OnboardingSettings {
       'should_show': shouldShowOnBoarding(),
     };
 
-    print('Onboarding Info: $info');
+    log('Onboarding Info: $info');
     return info;
   }
 
@@ -113,7 +115,7 @@ class OnboardingSettings {
     for (final key in keys) {
       await _preferences.remove(key);
     }
-    print('All onboarding data cleared.');
+    log('All onboarding data cleared.');
   }
 
 }

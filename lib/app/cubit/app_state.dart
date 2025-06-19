@@ -11,6 +11,10 @@ class AppInitial extends AppState {
   const AppInitial();
 }
 
+class AppNeedsOnboarding extends AppState {
+  const AppNeedsOnboarding();
+}
+
 class AppLoading extends AppState {
   const AppLoading();
 }

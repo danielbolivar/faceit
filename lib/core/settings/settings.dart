@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import './onboarding_settings.dart';
 
 class Settings {
@@ -18,10 +20,10 @@ class Settings {
 
   // Initialize all settings
   static Future<void> init() async {
-    print('Initializing Settings...');
+    log('Settings initialization started.');
     _instance = Settings._();
     await _instance!._initSettings();
-    print('Settings initialized.');
+    log('Settings initialized.');
   }
 
   Future<void> _initSettings() async {
