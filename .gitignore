@@ -44,6 +44,21 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Xcode related
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+
+# Xcode build artifacts
+ios/Pods/
+ios/Runner.xcworkspace/
+# Xcode user data
+ios/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+
+# MacOS related
+macos/Flutter/Flutter.framework
+macos/Flutter/Flutter.podspec
+# Windows related
+windows/Flutter/Flutter.framework
 
 # vscode settings
 .vscode/

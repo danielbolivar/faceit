@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forui/theme.dart';
 import '../cubit/app_cubit.dart';
 import '../cubit/app_state.dart';
 import '../../core/routing/app_router.dart';
@@ -16,6 +17,7 @@ class App extends StatelessWidget {
         builder: (context, state) {
           return MaterialApp.router(
             title: 'FaceIt',
+            theme: FThemes.zinc.dark.toApproximateMaterialTheme(),
             routerConfig: AppRouter.createRouter(),
           );
         },
