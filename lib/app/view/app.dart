@@ -4,7 +4,7 @@ import 'package:forui/theme.dart';
 import '../cubit/app_cubit.dart';
 import '../cubit/app_state.dart';
 import '../../core/routing/app_router.dart';
-import '../../core/di/injection_simple.dart';
+import '../../core/di/injection.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
