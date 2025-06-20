@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:faceit/core/settings/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,15 +31,15 @@ Future<void> _initializeWithRetry() async {
 
   for (int i = 0; i < maxRetries; i++) {
     try {
-      print('Attempting to initialize settings (attempt ${i + 1}/$maxRetries)');
+      log('Attempting to initialize settings (attempt ${i + 1}/$maxRetries)');
       await Settings.init();
-      print('Settings initialized successfully');
+      log('Settings initialized successfully');
       return;
     } catch (e) {
-      print('Initialization attempt ${i + 1} failed: $e');
+      log('Initialization attempt ${i + 1} failed: $e');
 
       if (i < maxRetries - 1) {
-        print('Waiting ${retryDelay}ms before retry...');
+        log('Waiting ${retryDelay}ms before retry...');
         await Future.delayed(Duration(milliseconds: retryDelay));
         retryDelay *= 2; // Exponential backoff
       } else {

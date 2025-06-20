@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:forui/theme.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -8,26 +10,56 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  late PageController _pageController = PageController();
+
+  int _currentPage = 0;
+  int get _pageCount => 3;
+
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      children: [
-        _buildPage(
-          title: 'Welcome to FaceIt',
-          description: 'Your personal finance companion.',
-          image: 'assets/images/onboarding1.png',
+    return Scaffold(
+      backgroundColor: FThemes.zinc.dark.colors.background,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                children: [
+                  _buildPage(
+                    title: 'Welcome to FaceIt',
+                    description: 'Your personal finance companion.',
+                    image: 'assets/images/onboarding1.png',
+                  ),
+                  _buildPage(
+                    title: 'Track Expenses',
+                    description: 'Easily track your daily expenses.',
+                    image: 'assets/images/onboarding1.png',
+                  ),
+                  _buildPage(
+                    title: 'Set Budgets',
+                    description: 'Manage your budgets effectively.',
+                    image: 'assets/images/onboarding1.png',
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(32),
+              child: SmoothPageIndicator(
+                controller: _pageController,
+                count: _pageCount,
+                effect: ColorTransitionEffect(
+                  dotHeight: 10,
+                  dotWidth: 10,
+                  activeDotColor: FThemes.zinc.dark.colors.primary,
+                  dotColor: FThemes.zinc.dark.colors.secondary,
+                ),
+              ),
+            ),
+          ],
         ),
-        _buildPage(
-          title: 'Track Expenses',
-          description: 'Easily track your daily expenses.',
-          image: 'assets/images/onboarding1.png',
-        ),
-        _buildPage(
-          title: 'Set Budgets',
-          description: 'Manage your budgets effectively.',
-          image: 'assets/images/onboarding1.png',
-        ),
-      ],
+      ),
     );
   }
 }
